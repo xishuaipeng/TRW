@@ -22,7 +22,8 @@ class DataSet:
             label = class_file.readline()
         print(class_label)
         return class_label
-
+    
+    @staticmethod
     def convert_coordinate(size,  box):
         dw = 1. / size[0]
         dh = 1. / size[1]
