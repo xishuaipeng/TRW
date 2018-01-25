@@ -315,6 +315,30 @@ class DataSet:
         self.draw_sizeDistri()
         #self.draw_example()
         plt.show()
+        
+    def split_train_test(self, train_radio):
+        list_path = './%s/all.list' % self.data_id
+        list_file = open(list_path)
+        list_name = []
+        label = list_file.readline()
+        while label:
+        label = label.strip()
+        list_name.append(label)
+        label = list_file.readline()
+        num_case = len(list_name)
+        np.random.shuffle(list_name)
+        if train_radio > 1:
+            num_train = train_radio
+        else:
+            num_train = int(train_radio * num_case)
+        train_list = list_name[0:num_train]
+        test_list = list_name[num_train:num_case]
+        train_path = list_path.replace('all', 'train')
+        test_path = list_path.replace('all', 'test')
+        # file = open(train_path, 'w')
+        open(train_path, 'w').writelines('%s\n'% i for i in train_list)
+        open(test_path, 'w').writelines('%s\n' % i for i in test_list)
+        return train_list, test_list
 
 
 
@@ -325,7 +349,36 @@ dataset.generate_label()
 dataset.display_analysis('')#260
 
 
+# train_list=[]
+# test_list=[]
+# train_radio =0.7
+# dataset = DataSet('0001')
+# dataset.generate_label()
+# [tr, te] = dataset.split_train_test(train_radio)
+# train_list.extend(tr)
+# test_list.extend(te)
 
+# dataset = DataSet('0002')
+# dataset.generate_label()
+# [tr, te] = dataset.split_train_test(train_radio)
+# train_list.extend(tr)
+# test_list.extend(te)
+
+# dataset = DataSet('0003')
+# dataset.generate_label()
+# [tr, te]= dataset.split_train_test(train_radio)
+# train_list.extend(tr)
+# test_list.extend(te)
+
+# dataset = DataSet('0004')
+# dataset.generate_label()
+# [tr, te] = dataset.split_train_test(train_radio)
+# train_list.extend(tr)
+# test_list.extend(te)
+
+
+# open('train.list', 'w').writelines('%s\n' % i for i in train_list)
+# open('test.list', 'w').writelines('%s\n' % i for i in test_list)
 
 
 
